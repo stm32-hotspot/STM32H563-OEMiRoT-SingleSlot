@@ -311,6 +311,7 @@ HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng)
 HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng)
 {
   HAL_StatusTypeDef status;
+  HAL_RNG_StateTypeDef state;
 
   /* Check the RNG handle allocation */
   if (hrng == NULL)
@@ -318,8 +319,10 @@ HAL_StatusTypeDef HAL_RNGEx_RecoverSeedError(RNG_HandleTypeDef *hrng)
     return HAL_ERROR;
   }
 
+  state = hrng->State;
+
   /* Check RNG peripheral state */
-  if ((hrng->State == HAL_RNG_STATE_READY) || (hrng->State == HAL_RNG_STATE_ERROR))
+  if ((state == HAL_RNG_STATE_READY) || (state == HAL_RNG_STATE_ERROR))
   {
     /* Change RNG peripheral state */
     hrng->State = HAL_RNG_STATE_BUSY;
@@ -427,8 +430,8 @@ HAL_StatusTypeDef   HAL_RNGEx_SetHealthFactorConfig(RNG_HandleTypeDef *hrng, uin
 
 #if (defined(RNG_HTSR0_RPERRX) || defined(RNG_HTSR1_ADERRX))
 /* Private functions -------------------------------------------------------------------------------------------------*/
-/** @defgroup RNG_Private_Functions RNG Private Functions
-  * @brief    RNG Private Functions
+/** @defgroup RNGEx_Private_Functions RNGEx Private Functions
+  * @brief    RNGEx Private Functions
   * @{
   */
 
@@ -566,7 +569,7 @@ HAL_StatusTypeDef RNG_ResilientRecoverSeedError(RNG_HandleTypeDef *hrng)
               __HAL_UNLOCK(hrng);
               return HAL_ERROR;
             }
-          } while (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_SR_BUSY));
+          } while (HAL_IS_BIT_SET(hrng->Instance->SR, RNG_SR_BUSY));
 
           /* No timeout --> Enable RNG */
           LL_RNG_Enable(hrng->Instance);

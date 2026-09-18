@@ -479,23 +479,30 @@ extern "C" {
   * @}
   */
 
-/** @defgroup PLAY_LL_EC_TRUSTZONE_ATTRIBUTES  TrustZone Attributes Definitions
+/** @defgroup PLAY_LL_EC_ATTRIBUTES PLAY Secure/Privilege attributes
   * @{
   */
 
-#define LL_PLAY_NPRIV        (0U)                                          /*!< Non-Privileged mode           */
-#define LL_PLAY_CONFIG_PRIV  (PLAY_PRIVCFGR_PRIV_0)                        /*!< Configuration Privileged mode */
-#define LL_PLAY_FULL_PRIV    (PLAY_PRIVCFGR_PRIV_0 | PLAY_PRIVCFGR_PRIV_1) /*!< Full Privileged mode          */
+#define LL_PLAY_ATTR_NSEC  (0U) /*!< Non-secure attribute                            */
+#define LL_PLAY_ATTR_SEC   (1U) /*!< Secure attribute on configuration registers     */
 
-#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-#define LL_PLAY_NSEC         (0U)                                          /*!< Non-Secure mode               */
-#define LL_PLAY_CONFIG_SEC   (PLAY_SECCFGR_SEC_0)                          /*!< Configuration Secure mode     */
-#define LL_PLAY_FULL_SEC     (PLAY_SECCFGR_SEC_0 | PLAY_SECCFGR_SEC_1)     /*!< Full Secure mode              */
+#define LL_PLAY_ATTR_NPRIV (0U) /*!< Non-privileged attribute                        */
+#define LL_PLAY_ATTR_PRIV  (1U) /*!< Privileged attribute on configuration registers */
 
-#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 /**
   * @}
   */
+
+/** @defgroup PLAY_LL_EC_ITEMS PLAY Attributes Items
+  * @{
+  */
+
+#define LL_PLAY_SEC_ITEM_CONFIG  (PLAY_SECCFGR_SEC_0)                          /*!< PLAY configuration registers items */
+#define LL_PLAY_SEC_ITEM_ALL     (PLAY_SECCFGR_SEC_0 | PLAY_SECCFGR_SEC_1)     /*!< All PLAY registers items           */
+
+#define LL_PLAY_PRIV_ITEM_CONFIG (PLAY_PRIVCFGR_PRIV_0)                        /*!< PLAY configuration registers items */
+#define LL_PLAY_PRIV_ITEM_ALL    (PLAY_PRIVCFGR_PRIV_0 | PLAY_PRIVCFGR_PRIV_1) /*!< All PLAY registers items           */
+
 
 /**
   * @}
@@ -519,6 +526,9 @@ extern "C" {
   */
 
 /* Exported macro ------------------------------------------------------------*/
+/** @defgroup PLAY_LL_Exported_Macros  LL PLAY Macros
+  * @{
+  */
 /** @defgroup PLAY_LL_EM_WRITE_READ  Common Write and Read registers Macros
   * @{
   */
@@ -2151,7 +2161,7 @@ __STATIC_INLINE uint32_t LL_PLAY_LUT_IsActiveFlag(const PLAY_TypeDef *playx, uin
   *  FLCLR          FLAGD_CLR       LL_PLAY_LUT_ClearFlag \n
   *  FLCLR          FLAGR_CLR       LL_PLAY_LUT_ClearFlag
   * @param  playx PLAY Instance.
-  * @param  flag  Value can be a one of the following values:
+  * @param  msk_flags  Value can be a one of the following values:
   *         @arg @ref LL_PLAY_LUT0_OUT_DIRECT
   *         @arg @ref LL_PLAY_LUT1_OUT_DIRECT
   *         @arg @ref LL_PLAY_LUT2_OUT_DIRECT
@@ -2196,7 +2206,7 @@ __STATIC_INLINE void LL_PLAY_LUT_ClearFlag(PLAY_TypeDef *playx, uint32_t msk_fla
   *  FLSET          FLAGD_SET       LL_PLAY_LUT_SetFlag \n
   *  FLSET          FLAGR_SET       LL_PLAY_LUT_SetFlag
   * @param  playx PLAY Instance.
-  * @param  flag  Value can be a one of the following values:
+  * @param  msk_flags  Value can be a one of the following values:
   *         @arg @ref LL_PLAY_LUT0_OUT_DIRECT
   *         @arg @ref LL_PLAY_LUT1_OUT_DIRECT
   *         @arg @ref LL_PLAY_LUT2_OUT_DIRECT
@@ -2368,114 +2378,87 @@ __STATIC_INLINE uint32_t LL_PLAY_LUT_IsActiveFlag_FLAGS(const PLAY_TypeDef *play
   * @}
   */
 
-/** @defgroup PLAY_LL_EF_TrustZone  TrustZone management functions
+/** @defgroup PLAY_LL_EF_Privilege_Services Privilege Services
   * @{
   */
 
 /**
-  * @brief  Configure Privilege mode.
-  * @rmtoll PRIVCFGR          PRIV          LL_PLAY_ConfigPrivilege
-  * @param  playx     PLAY Instance.
-  * @param  attribute Value can be a one of the following values:
-  *         @arg @ref LL_PLAY_NPRIV
-  *         @arg @ref LL_PLAY_CONFIG_PRIV
-  *         @arg @ref LL_PLAY_FULL_PRIV
+  * @brief  Set the privileged access level attribute for item(s).
+  * @rmtoll
+  *  PRIVCFGR          PRIV          LL_PLAY_SetPrivAttr
+  * @param  playx PLAY Instance.
+  * @param  item This parameter can be one or a combination of the following values:
+  *         @arg @ref LL_PLAY_PRIV_ITEM_CONFIG
+  *         @arg @ref LL_PLAY_PRIV_ITEM_ALL
+  * @param priv_attr This parameter can be one of the following values:
+  *        @arg @ref LL_PLAY_ATTR_NPRIV
+  *        @arg @ref LL_PLAY_ATTR_PRIV
   */
-__STATIC_INLINE void LL_PLAY_ConfigPrivilege(PLAY_TypeDef *playx, uint32_t attribute)
+__STATIC_INLINE void LL_PLAY_SetPrivAttr(PLAY_TypeDef *playx, uint32_t item, uint32_t priv_attr)
 {
-  MODIFY_REG(playx->PRIVCFGR, PLAY_PRIVCFGR_PRIV_Msk, attribute);
+  MODIFY_REG(playx->PRIVCFGR, PLAY_PRIVCFGR_PRIV, (item & ((~priv_attr) + 1U)));
 }
 
 /**
-  * @brief  Get Privilege mode configuration.
-  * @rmtoll PRIVCFGR          PRIV          LL_PLAY_GetConfigPrivilege
+  * @brief  Get the privileged access level attribute of an item.
+  * @rmtoll
+  *  PRIVCFGR          PRIV          LL_PLAY_GetPrivAttr
   * @param  playx PLAY Instance.
-  * @return Returned value can be one of the following values:
-  *         @arg @ref LL_PLAY_NPRIV
-  *         @arg @ref LL_PLAY_CONFIG_PRIV
-  *         @arg @ref LL_PLAY_FULL_PRIV
+  * @param  item This parameter can be one of the following values:
+  *         @arg @ref LL_PLAY_PRIV_ITEM_CONFIG
+  *         @arg @ref LL_PLAY_PRIV_ITEM_ALL
+  * @return Current privileged level attributes:
+  *         @arg @ref LL_PLAY_ATTR_NPRIV
+  *         @arg @ref LL_PLAY_ATTR_PRIV
   */
-__STATIC_INLINE uint32_t LL_PLAY_GetConfigPrivilege(const PLAY_TypeDef *playx)
+__STATIC_INLINE uint32_t LL_PLAY_GetPrivAttr(const PLAY_TypeDef *playx, uint32_t item)
 {
-  return (uint32_t)(READ_BIT(playx->PRIVCFGR, PLAY_PRIVCFGR_PRIV_Msk));
+  return ((READ_BIT(playx->PRIVCFGR, item) == item) ? LL_PLAY_ATTR_PRIV : LL_PLAY_ATTR_NPRIV);
 }
 
 /**
-  * @brief  Indicates if the PLAY Configuration registers require a Privilege access.
-  * @rmtoll PRIVCFGR          PRIV          LL_PLAY_IsEnabledConfigPrivilege
-  * @param  playx PLAY Instance.
-  * @return State of bit (1 or 0).
+  * @}
   */
-__STATIC_INLINE uint32_t LL_PLAY_IsEnabledConfigPrivilege(const PLAY_TypeDef *playx)
-{
-  return ((READ_BIT(playx->PRIVCFGR, PLAY_PRIVCFGR_PRIV_Msk) == LL_PLAY_CONFIG_PRIV) ? 1UL : 0UL);
-}
 
-/**
-  * @brief  Indicates if all PLAY registers require a Privilege access.
-  * @rmtoll PRIVCFGR          PRIV          LL_PLAY_IsEnabledFullPrivilege
-  * @param  playx PLAY Instance.
-  * @return State of bit (1 or 0).
+/** @defgroup PLAY_LL_EF_Security_Services Security Services
+  * @{
   */
-__STATIC_INLINE uint32_t LL_PLAY_IsEnabledFullPrivilege(const PLAY_TypeDef *playx)
-{
-  return ((READ_BIT(playx->PRIVCFGR, PLAY_PRIVCFGR_PRIV_Msk) == LL_PLAY_FULL_PRIV) ? 1UL : 0UL);
-}
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
-  * @brief  Configure Secure mode
-  * @rmtoll SECCFGR          SEC          LL_PLAY_ConfigSecure
-  * @param  playx     PLAY Instance.
-  * @param  attribute Value can be a one of the following values:
-  *         @arg @ref LL_PLAY_NSEC
-  *         @arg @ref LL_PLAY_CONFIG_SEC
-  *         @arg @ref LL_PLAY_FULL_SEC
-  * @note Only available when system implements security (TZEN=1).
+  * @brief  Set the security access level attribute for item(s).
+  * @rmtoll
+  *  SECCFGR           SEC          LL_PLAY_SetSecAttr
+  * @param  playx PLAY Instance.
+  * @param  item This parameter can be one or a combination of the following values:
+  *         @arg @ref LL_PLAY_SEC_ITEM_CONFIG
+  *         @arg @ref LL_PLAY_SEC_ITEM_ALL
+  * @param sec_attr This parameter can be one of the following values:
+  *        @arg @ref LL_PLAY_ATTR_NSEC
+  *        @arg @ref LL_PLAY_ATTR_SEC
   */
-__STATIC_INLINE void LL_PLAY_ConfigSecure(PLAY_TypeDef *playx, uint32_t attribute)
+__STATIC_INLINE void LL_PLAY_SetSecAttr(PLAY_TypeDef *playx, uint32_t item, uint32_t sec_attr)
 {
-  MODIFY_REG(playx->SECCFGR, PLAY_SECCFGR_SEC_Msk, attribute);
+  MODIFY_REG(playx->SECCFGR, PLAY_SECCFGR_SEC, (item & ((~sec_attr) + 1U)));
 }
+#endif /* __ARM_FEATURE_CMSE */
 
 /**
-  * @brief  Get Secure mode configuration
-  * @rmtoll SECCFGR          SEC          LL_PLAY_GetConfigSecure
+  * @brief  Get the security access level attribute of an item.
+  * @rmtoll
+  *  SECCFGR           SEC          LL_PLAY_GetSecAttr
   * @param  playx PLAY Instance.
-  * @note Only available when system implements security (TZEN=1).
-  * @return Returned value of configuration can be one of the following values:
-  *         @arg @ref LL_PLAY_NSEC
-  *         @arg @ref LL_PLAY_CONFIG_SEC
-  *         @arg @ref LL_PLAY_FULL_SEC
+  * @param  item This parameter can be one of the following values:
+  *         @arg @ref LL_PLAY_SEC_ITEM_CONFIG
+  *         @arg @ref LL_PLAY_SEC_ITEM_ALL
+  * @return Current security level attributes:
+  *         @arg @ref LL_PLAY_ATTR_NSEC
+  *         @arg @ref LL_PLAY_ATTR_SEC
   */
-__STATIC_INLINE uint32_t LL_PLAY_GetConfigSecure(const PLAY_TypeDef *playx)
+__STATIC_INLINE uint32_t LL_PLAY_GetSecAttr(const PLAY_TypeDef *playx, uint32_t item)
 {
-  return (uint32_t)(READ_BIT(playx->SECCFGR, PLAY_SECCFGR_SEC_Msk));
+  return ((READ_BIT(playx->SECCFGR, item) == item) ? LL_PLAY_ATTR_SEC : LL_PLAY_ATTR_NSEC);
 }
-
-/**
-  * @brief  Indicates if the PLAY Configuration registers require a Secure access.
-  * @rmtoll SECCFGR          SEC          LL_PLAY_IsEnabledConfigSecure
-  * @param  playx PLAY Instance.
-  * @return State of bit (1 or 0).
-  */
-__STATIC_INLINE uint32_t LL_PLAY_IsEnabledConfigSecure(const PLAY_TypeDef *playx)
-{
-  return ((READ_BIT(playx->SECCFGR, PLAY_SECCFGR_SEC_Msk) == LL_PLAY_CONFIG_SEC) ? 1UL : 0UL);
-}
-
-/**
-  * @brief  Indicates if all PLAY registers require a Secure access.
-  * @rmtoll SECCFGR          SEC          LL_PLAY_IsEnabledFullSecure
-  * @param  playx PLAY Instance.
-  * @return State of bit (1 or 0).
-  */
-__STATIC_INLINE uint32_t LL_PLAY_IsEnabledFullSecure(const PLAY_TypeDef *playx)
-{
-  return ((READ_BIT(playx->SECCFGR, PLAY_SECCFGR_SEC_Msk) == LL_PLAY_FULL_SEC) ? 1UL : 0UL);
-}
-
-#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 /**
   * @}

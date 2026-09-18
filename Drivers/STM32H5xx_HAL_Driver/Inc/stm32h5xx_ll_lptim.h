@@ -1219,26 +1219,26 @@ __STATIC_INLINE void LL_LPTIM_SetInput2Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
   *         @arg @ref LL_LPTIM_LPTIM2_IC2_RMP_HSI_1024
   *         @arg @ref LL_LPTIM_LPTIM2_IC2_RMP_CSI_128
   *         @arg @ref LL_LPTIM_LPTIM2_IC2_RMP_HSI_8
-  *         @arg @ref LL_LPTIM_LPTIM3_IC1_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM3_IC1_RMP_GPIO (*)
   *         @arg @ref LL_LPTIM_LPTIM3_IC1_RMP_COMP1 (*)
   *         @arg @ref LL_LPTIM_LPTIM3_IC1_RMP_COMP2 (*)
-  *         @arg @ref LL_LPTIM_LPTIM3_IC2_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM3_IC2_RMP_GPIO (*)
   *         @arg @ref LL_LPTIM_LPTIM3_IC2_RMP_COMP1 (*)
   *         @arg @ref LL_LPTIM_LPTIM3_IC2_RMP_COMP2 (*)
-  *         @arg @ref LL_LPTIM_LPTIM4_IC1_RMP_GPIO
-  *         @arg @ref LL_LPTIM_LPTIM4_IC2_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM4_IC1_RMP_GPIO (*)
+  *         @arg @ref LL_LPTIM_LPTIM4_IC2_RMP_GPIO (*)
   *         @arg @ref LL_LPTIM_LPTIM4_IC2_RMP_COMP1 (*)
   *         @arg @ref LL_LPTIM_LPTIM4_IC2_RMP_EVENTOUT (*)
-  *         @arg @ref LL_LPTIM_LPTIM5_IC1_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM5_IC1_RMP_GPIO (*)
   *         @arg @ref LL_LPTIM_LPTIM5_IC1_RMP_COMP1 (*)
   *         @arg @ref LL_LPTIM_LPTIM5_IC1_RMP_COMP2 (*)
   *         @arg @ref LL_LPTIM_LPTIM5_IC1_RMP_I3C1_IBIACK (*)
-  *         @arg @ref LL_LPTIM_LPTIM5_IC2_RMP_GPIO
-  *         @arg @ref LL_LPTIM_LPTIM6_IC1_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM5_IC2_RMP_GPIO (*)
+  *         @arg @ref LL_LPTIM_LPTIM6_IC1_RMP_GPIO (*)
   *         @arg @ref LL_LPTIM_LPTIM6_IC1_RMP_COMP1 (*)
   *         @arg @ref LL_LPTIM_LPTIM6_IC1_RMP_COMP2 (*)
   *         @arg @ref LL_LPTIM_LPTIM6_IC1_RMP_I3C2_IBIACK (*)
-  *         @arg @ref LL_LPTIM_LPTIM6_IC2_RMP_GPIO
+  *         @arg @ref LL_LPTIM_LPTIM6_IC2_RMP_GPIO (*)
   *
   *         (*)  Value not defined in all devices. \n
   *

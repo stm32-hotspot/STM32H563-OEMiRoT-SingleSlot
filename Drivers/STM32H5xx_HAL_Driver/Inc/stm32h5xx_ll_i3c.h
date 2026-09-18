@@ -287,6 +287,22 @@ typedef struct
   * @}
   */
 
+
+#if defined(I3C_CFGR_FCFDIS)
+
+/** @defgroup I3C_LL_EC_End_Of_FrameCompletion End of Frame completion
+  * @{
+  */
+#define LL_I3C_END_OF_FRAME_CPLT_DISABLE   I3C_CFGR_FCFDIS
+/*!< Frame Completion Flag is autoclear by HW, no need SW action */
+#define LL_I3C_END_OF_FRAME_CPLT_ENABLE    0x00000000U
+/*!< Frame Completion Flag need to be clear by SW action (default configuration) */
+/**
+  * @}
+  */
+
+#endif /* I3C_CFGR_FCFDIS */
+
 /** @defgroup I3C_LL_EC_PAYLOAD PAYLOAD
   * @{
   */

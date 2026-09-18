@@ -2165,6 +2165,13 @@ extern "C" {
 #define HAL_GetFMCMemorySwappingConfig        HAL_FMC_GetBankSwapConfig
 #endif /* STM32H7RS || STM32N6 */
 
+#if defined(STM32N6)
+/* alias CMSIS */
+#define CSI_PCR_PWRDOWN_Pos             CSI_PCR_NPWRDOWN_Pos
+#define CSI_PCR_PWRDOWN_Msk             CSI_PCR_NPWRDOWN_Msk
+#define CSI_PCR_PWRDOWN                 CSI_PCR_NPWRDOWN
+#endif /* STM32N6 */
+
 /**
   * @}
   */
@@ -3717,12 +3724,7 @@ extern "C" {
 #define RCC_SYSCLKSOURCE_STATUS_PLLR   RCC_SYSCLKSOURCE_STATUS_PLLCLK
 #endif
 
-#if defined(STM32GK)
-#define RCC_RTCCLKSOURCE_NO_CLK     RCC_RTCCLKSOURCE_DISABLE
-#define RCC_RTCCLKSOURCE_NONE       RCC_RTCCLKSOURCE_DISABLE
-#elif defined(STM32L4) || defined(STM32WB) || defined(STM32G0) || defined(STM32G4) || defined(STM32L5) || \
-      defined(STM32WL) || defined(STM32C0) || defined(STM32V7) || defined(STM32N6) || defined(STM32H7RS) || \
-      defined(STM32U0)
+#if defined(STM32L4) || defined(STM32WB) || defined(STM32G0) || defined(STM32G4) || defined(STM32L5) ||  defined(STM32WL) || defined(STM32C0) || defined(STM32N6) || defined(STM32H7RS) ||  defined(STM32U0)
 #define RCC_RTCCLKSOURCE_NO_CLK     RCC_RTCCLKSOURCE_NONE
 #else
 #define RCC_RTCCLKSOURCE_NONE       RCC_RTCCLKSOURCE_NO_CLK
@@ -3971,11 +3973,7 @@ extern "C" {
 /** @defgroup HAL_RTC_Aliased_Macros HAL RTC Aliased Macros maintained for legacy purpose
   * @{
   */
-#if defined (STM32G0) || defined (STM32L5) || defined (STM32L412xx) || defined (STM32L422xx) || \
-    defined (STM32L4P5xx)|| defined (STM32L4Q5xx) || defined (STM32G4) || defined (STM32WL) || defined (STM32U5) || \
-    defined (STM32GK) || defined (STM32WB_GEN2) || defined (STM32WBA) || defined (STM32V7) || defined (STM32H5) || \
-    defined (STM32C0) || defined (STM32N6) || defined (STM32H7RS) ||  defined (STM32U0) || defined (STM32U3) || \
-    defined (STM32V8) || defined (STM32C1)
+#if defined (STM32G0) || defined (STM32L5) || defined (STM32L412xx) || defined (STM32L422xx) ||  defined (STM32L4P5xx)|| defined (STM32L4Q5xx) || defined (STM32G4) || defined (STM32WL) || defined (STM32U5) || defined (STM32WBA) || defined (STM32H5) ||  defined (STM32C0) || defined (STM32N6) || defined (STM32H7RS) || defined (STM32U0) || defined (STM32U3)
 #else
 #define __HAL_RTC_CLEAR_FLAG                      __HAL_RTC_EXTI_CLEAR_FLAG
 #endif
