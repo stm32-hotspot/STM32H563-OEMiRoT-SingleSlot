@@ -67,6 +67,15 @@ set write_protect=WRPSGn1=%wrpgrp1% WRPSGn2=%wrpgrp2%
 set sec_water_mark=SECWM1_STRT=%sec1_start% SECWM1_END=%sec1_end% SECWM2_STRT=%sec2_start% SECWM2_END=%sec2_end%
 set boot_lock=-ob SECBOOT_LOCK=%boot_lck%
 
+::
+::
+::
+::
+::
+::
+::
+::
+
 :: =============================================== Configure Option Bytes ====================================================================
 set "action=Set TZEN = 1"
 echo %action%
@@ -84,8 +93,8 @@ set "action=Configure Secure Water Mark"
 echo %action%
 %stm32programmercli% %connect_no_reset% -ob %sec_water_mark%
 IF !errorlevel! NEQ 0 goto :error
-:: ==================================================== Download images ====================================================================
 
+:: ==================================================== Download images ====================================================================
 echo "Application images programming in download slots"
 
 if  "%app_image_number%" == "2" (
@@ -145,7 +154,6 @@ IF  "%primary_only%" == "1" (
 )
 IF !errorlevel! NEQ 0 goto :error
 )
-
 
 if  "%ns_data_image_number%" == "1" (
 set "action=Write non Secure Data"

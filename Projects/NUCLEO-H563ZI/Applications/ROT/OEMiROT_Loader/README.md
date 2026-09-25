@@ -1,4 +1,4 @@
-## <b>OEMiROT_Appli application Description</b>
+## <b>OEMiROT_Loader application Description</b>
 
 This project provides a OEMiROT boot path application example. Boot is performed through OEMiROT boot path after authenticity and the integrity checks of the project firmware and project data
 images.
@@ -20,20 +20,20 @@ TrustZone, OEMiROT, boot path, Root Of Trust, Security, MPU
 
 ### <b>Directory contents</b>
 
-  - ROT/OEMiROT_Appli/Src/com.c                                 UART low level interface
-  - ROT/OEMiROT_Appli/Src/loader.c                              System configuration before calling bootloader
-  - ROT/OEMiROT_Appli/Src/low_level_device.c                    Flash Low level device setting
-  - ROT/OEMiROT_Appli/Src/low_level_flash.c                     Secure Low level flash driver
-  - ROT/OEMiROT_Appli/Src/main.c                                Secure Main program
-  - ROT/OEMiROT_Appli/Src/stm32h5xx_it.c                        Secure Interrupt handlers
-  - ROT/OEMiROT_Appli/Src/system_stm32h5xx.c                    Secure STM32H5xx system clock configuration file
-  - ROT/OEMiROT_Appli/Inc/low_level_flash.h                     Secure Low level flash driver header file
-  - ROT/OEMiROT_Appli/Inc/main.h                                Secure Main program header file
-  - ROT/OEMiROT_Appli/Inc/partition_stm32h563xx.h               STM32H5xx Device System Configuration file
-  - ROT/OEMiROT_Appli/Inc/stm32h5xx_hal_conf.h                  Secure HAL Configuration file
-  - ROT/OEMiROT_Appli/Inc/stm32h5xx_it.h                        Secure Interrupt handlers header file
-  - ROT/OEMiROT_Appli/Secure_nsclib/appli_flash_layout.h        Flash layout header file
-  - ROT/OEMiROT_Appli/Binary                                    Application firmware image (application binary + MCUBoot header and metadata)
+  - ROT/OEMiROT_Loader/Src/com.c                                 UART low level interface
+  - ROT/OEMiROT_Loader/Src/loader.c                              System configuration before calling bootloader
+  - ROT/OEMiROT_Loader/Src/low_level_device.c                    Flash Low level device setting
+  - ROT/OEMiROT_Loader/Src/low_level_flash.c                     Secure Low level flash driver
+  - ROT/OEMiROT_Loader/Src/main.c                                Secure Main program
+  - ROT/OEMiROT_Loader/Src/stm32h5xx_it.c                        Secure Interrupt handlers
+  - ROT/OEMiROT_Loader/Src/system_stm32h5xx.c                    Secure STM32H5xx system clock configuration file
+  - ROT/OEMiROT_Loader/Inc/low_level_flash.h                     Secure Low level flash driver header file
+  - ROT/OEMiROT_Loader/Inc/main.h                                Secure Main program header file
+  - ROT/OEMiROT_Loader/Inc/partition_stm32h563xx.h               STM32H5xx Device System Configuration file
+  - ROT/OEMiROT_Loader/Inc/stm32h5xx_hal_conf.h                  Secure HAL Configuration file
+  - ROT/OEMiROT_Loader/Inc/stm32h5xx_it.h                        Secure Interrupt handlers header file
+  - ROT/OEMiROT_Loader/Secure_nsclib/appli_flash_layout.h        Flash layout header file
+  - ROT/OEMiROT_Loader/Binary                                    Application firmware image (application binary + MCUBoot header and metadata)
 
 ### <b>Hardware and Software environment</b>
 

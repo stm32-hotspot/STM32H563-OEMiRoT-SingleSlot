@@ -10,14 +10,14 @@
       <TargetName>NUCLEO-H563ZI_OEMiROT_Loader</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H563ZITx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H5xx_DFP.1.0.0</PackID>
-          <PackURL>http://www.keil.com/pack</PackURL>
+          <PackID>Keil.STM32H5xx_DFP.2.3.0-B01</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -81,9 +81,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>fromelf #L --bin --output=$L"\..\..\..\Binary\rot_tz_s_loader.bin"</UserProg1Name>
-            <UserProg2Name>.\postbuild.bat "secure"</UserProg2Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32H563xx,USE_HAL_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../Inc;../Secure_nsclib</IncludePath>
+              <IncludePath>../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include;../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc;../Inc;../../../../../../Middlewares/Third_Party/mcuboot/platform/ext/driver;../Secure_nsclib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,6 +403,16 @@
               <FileName>stm32h5xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_crc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_crc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h5xx_hal_dma.c</FileName>
@@ -485,34 +495,19 @@
           <GroupName>Application/User</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/main.c</FilePath>
-            </File>
-            <File>
               <FileName>com.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/com.c</FilePath>
             </File>
             <File>
-              <FileName>low_level_security.c</FileName>
+              <FileName>common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Src/low_level_security.c</FilePath>
+              <FilePath>../Src/common.c</FilePath>
             </File>
             <File>
-              <FileName>loader.c</FileName>
+              <FileName>fw_update_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Src/loader.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h5xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/stm32h5xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>low_level_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/low_level_flash.c</FilePath>
+              <FilePath>../Src/fw_update_app.c</FilePath>
             </File>
             <File>
               <FileName>low_level_device.c</FileName>
@@ -520,9 +515,34 @@
               <FilePath>../Src/low_level_device.c</FilePath>
             </File>
             <File>
+              <FileName>low_level_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/low_level_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>low_level_security.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/low_level_security.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/main.c</FilePath>
+            </File>
+            <File>
               <FileName>startup_stm32h563xx.s</FileName>
               <FileType>2</FileType>
               <FilePath>./startup_stm32h563xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/stm32h5xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>ymodem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/ymodem.c</FilePath>
             </File>
           </Files>
         </Group>

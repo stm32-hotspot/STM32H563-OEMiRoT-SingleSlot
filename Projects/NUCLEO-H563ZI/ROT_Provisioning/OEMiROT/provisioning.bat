@@ -121,15 +121,7 @@ echo.
 if [%1] neq [AUTO] pause >nul
 
 if "%isGeneratedByCubeMX%" == "true" goto :cubemx2
-echo    * Code firmware image generation
-echo        Open the OEMiROT_Appli_TrustZone project with preferred toolchain.
-echo        Rebuild the Secure project. The rot_tz_s_app_init_sign.hex and rot_tz_s_app_enc_sign.hex files are
-echo        generated with the postbuild command.
-echo        Rebuild the NonSecure project. The rot_tz_ns_app_init_sign.hex and rot_tz_ns_app_enc_sign.hex files are
-echo        generated with the postbuild command.
-echo        Press any key to continue...
-echo.
-if [%1] neq [AUTO] pause >nul
+
 if  "%primary_only%" == "1" (
 echo    * Loader firmware image generation
 echo        Open the OEMiROT_Loader project with preferred toolchain and rebuild all files.

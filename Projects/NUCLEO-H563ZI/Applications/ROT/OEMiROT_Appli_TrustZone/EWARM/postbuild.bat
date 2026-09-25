@@ -3,12 +3,16 @@
 :: When script is called from STM32CubeIDE : set signing="%1"
 :: When script is called from IAR or KEIL  : set "signing=%1"
 set "signing=%1"
+
 :: Getting the Trusted Package Creator CLI path
 set "projectdir=%~dp0"
 pushd %projectdir%\..\..\..\..\ROT_Provisioning
+
 set provisioningdir=%cd%
 popd
+
 call "%provisioningdir%\env.bat"
+
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
 
@@ -28,16 +32,10 @@ set primary_only=0
 ::========================================================================================
 ::image binary files
 ::========================================================================================
-IF "%primary_only%"=="1" (
 set s_code_bin="%projectdir%\..\Binary\rot_tz_s_app.bin"
 set ns_code_bin="%projectdir%\..\Binary\rot_tz_ns_app.bin"
 set one_code_bin="%projectdir%\..\Binary\rot_tz_app.bin"
-) ELSE (
-set s_code_bin="%projectdir%\..\Binary\rot_tz_s_app.hex"
-set ns_code_bin="%projectdir%\..\Binary\rot_tz_ns_app.hex"
-set one_code_bin="%projectdir%\..\Binary\rot_tz_app.hex"
-set firmware_execution_offset="Firmware execution area offset"
-)
+
 ::======================================================================================
 ::image xml configuration files
 ::======================================================================================

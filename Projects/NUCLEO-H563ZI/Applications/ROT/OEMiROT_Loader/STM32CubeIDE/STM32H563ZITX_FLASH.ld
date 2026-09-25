@@ -31,24 +31,24 @@
 **
 ******************************************************************************
 */
-S_CODE_OFFSET = 0x1a000;          /* This definition is updated automatically from OEMiROT_Boot postbuild */
+S_CODE_OFFSET = 0x1fa000;          /* This definition is updated automatically from OEMiROT_Boot postbuild */
 S_CODE_SIZE = 0x6000;             /* This definition is updated automatically from OEMiROT_Boot postbuild */
 
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-/* Highest address of the user mode stack */
-_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
-
-_Min_Heap_Size = 0x200; /* required amount of heap */
-_Min_Stack_Size = 0x400; /* required amount of stack */
+_Min_Heap_Size = 0x400; /* required amount of heap */
+_Min_Stack_Size = 0x800; /* required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x30000000,    LENGTH = 0x40000    /* Memory is divided. Actual start is 0x30000000 and actual length is 256K */
+  RAM    (xrw)    : ORIGIN = 0x30040000,    LENGTH = 0x10000    /* Memory is divided. Actual start is 0x30000000 and actual length is 256K */
   FLASH    (rx)    : ORIGIN = (0xc000000 + S_CODE_OFFSET),    LENGTH = (S_CODE_SIZE )    /* Memory is divided. Actual start is 0x8000000 and actual length is 2048K */
 }
+
+/* Highest address of the user mode stack */
+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
 
 /* Sections */
 SECTIONS
